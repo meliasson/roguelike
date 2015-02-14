@@ -1,0 +1,67 @@
+html, body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+div#viewport {
+  background: #db2e34;
+  color: #fdf6e3;
+  height: 100vh;
+}
+
+div#terminal {
+  background: #333;
+  border: 5px solid #fdf6e3;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  bottom: 0;
+  display: table;
+  font-family: 'Press Start 2P', cursive;
+  height: 50.625vw;
+  max-height: 90vh;
+  left: 0;
+  margin: auto;
+  padding: 2vmin;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 90vw;
+  max-width: 160vh;
+}
+
+/* MENU */
+
+div#menu {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+div#menu h1 {
+  cursor: pointer;
+  font-size: 10vmin;
+  line-height: 1;
+  position: relative;
+  text-align: center;
+}
+
+div#menu p {
+  font-size: 3vmin;
+  margin-top: 4vmin;
+  text-align: center;
+  -webkit-animation: blink 1s step-end infinite;
+}
+
+@-webkit-keyframes blink {
+  0% { color: #fdf6e3; }
+  50% { color: #333 }
+}
+
+/* GAME */
+
+div#game {
+  font-family: Menlo;
+  display: none;
+  font-size: 3vmin;
+}
