@@ -2,17 +2,19 @@ module Api
   class GameController < ApplicationController
     def create
       game_id = 1
-      @game = Game.new(game_id, Dungeon.generate)
+      @game = Game.new(game_id, Characters.assemble, Dungeon.generate)
       cookies[:game_id] = game_id
     end
   end
 
   class Game
     attr_reader :id
+    attr_reader :characters
     attr_reader :dungeon
 
-    def initialize(id, dungeon)
+    def initialize(id, characters, dungeon)
       @id = id
+      @characters = characters
       @dungeon = dungeon
     end
   end
@@ -24,6 +26,12 @@ module Api
        [0, 0, 0, 0, 0],
        [0, 0, 0, 0, 0],
        [0, 0, 0, 0, 0]]
+    end
+  end
+
+  class Characters
+    def self.assemble
+      [{ pos: [2, 3] }]
     end
   end
 end
