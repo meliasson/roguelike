@@ -15,25 +15,30 @@ function addKeyEventListeners() {
 function createGame() {
     $.post( "/api/game/", function(data) {
         $("div#menu").hide();
-        renderDungeon(data.dungeon, data.characters);
+        renderDungeon(data.dungeon);
+        renderCharacters(data.characters)
     });
 }
 
-function renderDungeon(dungeon, characters) {
-    console.log(characters)
+function renderDungeon(dungeon) {
     $("div#game").show();
     for (var i = 0; i < dungeon.length; i++) {
         $("div#game").append("<div id='row" + i + "'>")
         for (var j = 0; j < dungeon[i].length; j++) {
             switch(dungeon[i][j]) {
             case 0:
+                $("div#row" + i).append("<span id='cell" + i + j + "'>#</span>")
+                break;
+            case 1:
                 $("div#row" + i).append("<span id='cell" + i + j + "'>.</span>")
+                break;
             }
         }
     }
+}
 
+function renderCharacters(characters) {
     for (var i = 0; i < characters.length; i++) {
-        console.log(characters[i].pos);
         $("span#cell" + characters[i].pos[0] + characters[i].pos[1]).text("@")
     }
 }
