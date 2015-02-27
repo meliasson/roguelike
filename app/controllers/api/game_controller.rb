@@ -1,9 +1,15 @@
 module Api
   class GameController < ApplicationController
     def create
-      game_id = 1
-      @game = Game.new(game_id, Characters.assemble, Dungeon.generate)
-      cookies[:game_id] = game_id
+      @game = Game.new
+      cookies[:id] = @game.id
+      cookies[:characters] = @game.characters
+      cookies[:dungeon] = @game.dungeon
+    end
+
+    def update
+
+      fail 'HELLO!!!!!'
     end
   end
 
@@ -12,25 +18,34 @@ module Api
     attr_reader :characters
     attr_reader :dungeon
 
-    def initialize(id, characters, dungeon)
-      @id = id
-      @characters = characters
-      @dungeon = dungeon
+    def initialize
+      @id = 1
+      @characters = Characters.generate
+      @dungeon = Dungeon.generate
     end
   end
 
   class Dungeon
     def self.generate
-      [[0, 0, 0, 0, 0],
-       [0, 1, 1, 1, 0],
-       [0, 1, 1, 1, 0],
-       [0, 1, 1, 1, 0],
-       [0, 0, 0, 0, 0]]
+      [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+       [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
     end
   end
 
   class Characters
-    def self.assemble
+    def self.generate
       [{ pos: [2, 3] }]
     end
   end
