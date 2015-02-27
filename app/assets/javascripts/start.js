@@ -1,10 +1,12 @@
+var characters;
+
 $(function() {
-    // startMusic();
+    startMusic();
     addKeyEventListeners();
 });
 
 function startMusic() {
-    setTimeout(function() { $("#music").trigger("play"); }, 1000);
+    setTimeout(function() { $("#music").trigger("play"); }, 500);
 }
 
 function stopMusic() {
@@ -15,29 +17,25 @@ function addKeyEventListeners() {
     addEventListener(
         "keydown",
         function(e) {
-            e.preventDefault();
             if (e.keyCode == 83) {
                 stopMusic();
                 createGame();
             }
             else if (e.keyCode == 37) {
-                $.ajax({
-                    url: "/api/game/1",
-                    type: "PUT",
-                    success: function(result) {
-                        console.log("YEAH!");
-                    }
-                });
-                console.log("Moving left!");
+                e.preventDefault();
+                updateGame("?act=move&dir=left");
             }
             else if (e.keyCode == 39) {
-                console.log("Moving right!");
+                e.preventDefault();
+                updateGame("?act=move&dir=right");
             }
             else if (e.keyCode == 38) {
-                console.log("Moving up!");
+                e.preventDefault();
+                updateGame("?act=move&dir=up");
             }
             else if (e.keyCode == 40) {
-                console.log("Moving down!");
+                e.preventDefault();
+                updateGame("?act=move&dir=down");
             }
         });
 }
@@ -45,13 +43,25 @@ function addKeyEventListeners() {
 function createGame() {
     $.post( "/api/game/", function(data) {
         $("div#menu").hide();
+        $("div#game").css("display", "table");
         renderDungeon(data.dungeon);
         renderCharacters(data.characters);
     });
 }
 
+function updateGame(action) {
+    $.ajax({
+        url: "/api/game/" + getCookie("game_id") + action,
+        type: "PUT",
+        success: function(data) {
+            renderDungeon(data.dungeon);
+            renderCharacters(data.characters);
+        }
+    });
+}
+
 function renderDungeon(dungeon) {
-    $("div#game").css("display", "table");
+    $("div#dungeon").empty();
     for (var i = 0; i < dungeon.length; i++) {
         $("div#dungeon").append("<div id='row" + i + "'>")
         for (var j = 0; j < dungeon[i].length; j++) {
@@ -74,4 +84,17 @@ function renderCharacters(characters) {
     for (var i = 0; i < characters.length; i++) {
         $("span#cell" + characters[i].pos[0] + characters[i].pos[1]).text("@");
     }
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1);
+        if (c.indexOf(name) === 0) return c.substring(name.length,c.length);
+    }
+
+    return "";
 }
