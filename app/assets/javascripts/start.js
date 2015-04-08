@@ -1,5 +1,3 @@
-var characters;
-
 $(function() {
     startMusic();
     addKeyEventListeners();
